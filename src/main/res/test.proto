@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+option java_package = "com.palkatap.space.monitor.protobuf";
+option java_outer_classname = "WGuidis";
+
+message Message {
+  int32 lds_id = 1;
+  string lds_name = 2;
+  int32 folder_id = 3;
+  string folder_name = 4;
+  int32 ch_id = 5;
+  int32 ckc_id = 6;
+  string ch_name = 7;
+  string ckc_name = 8;
+  string ch_descr = 9;
+  string ckc_descr = 10;
+  string parameter_name = 11;
+  string parameter_unit = 12;
+  int32 def_match_def_id = 13;
+  string match_mode_flag = 14;
+  string owner = 15;
+  int32 perm_domain_id = 16;
+  string viol_mail_addr = 17;
+  int32 mpc_def_id = 18;
+  string comment_req_flag = 19;
+  int32 tsg_display_mode = 20; // is actually short, int16 type doesn't exists
+  int32 digits = 21; // short
+  int32 server_time = 22;
+  bytes chart_setup_blob = 23;
+  NormalizeType normalize_type = 24;
+  string fixed_scale_limits = 25;
+  int32 chart_design_id = 26;
+//  int32 lds_exnum = 27;
+  repeated Exkey exkeys = 27;
+  repeated string dakey_names = 28;
+  repeated string routing_address = 29;
+  repeated DisplayRule displayRules = 30;
+
+  repeated Sample samples = 400;
+}
+
+message Exkey {
+	string exkey_name = 1;
+	string fixed_filter = 2; // only if the chart has a fixed value filter, not "*"
+}
+
+message DisplayRule {
+	string chart_type_id = 1;
+	string display_rule = 2;
+}
+
+enum NormalizeType {
+	//   NormalizationMode normalizationMode; // 0 - not norm, 1 - norm to target, 2 - to spec, 3 - to CL
+	NOT_NORM = 0;
+	NORM_TO_TARGET = 1;
+	NORM_TO_SPEC = 2;
+	NORM_TO_CL = 3;
+}
+
+message Violation {
+	int32 val_type_id = 1;
+	int64 last_viol_win_smp = 2;
+}
+message Sample {
+  int64 sample_id = 1;
+  int32 sample_date = 2;
+  string spc_com_extern = 3;
+  string spc_flag_extern = 4;
+  string spc_com_intern = 5;
+  string spc_flag_intern = 6;
+  repeated Violation violations = 7;
+  int32 prio_val_type_id = 8;
+  string viol_comment = 9;
+  int32 viol_comment_date = 10;
+  string viol_comment_flag = 11;
+}
+
